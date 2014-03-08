@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.Controller
 import play.api.libs.json.Json._
 
 import views.html
@@ -19,16 +19,19 @@ object UserPost extends Controller with Secured {
       User.findByEmail(email).map {
         user =>
           Ok(
-            html.user()
+            html.user(user)
           )
 
       }.getOrElse(Forbidden)
   }
 
-
-  def posts = Action {
-    Ok(toJson(
-      List("Di Huang", "Di Zhu", "Aaron Huang")
-    ))
+  def posts = isAuthenticated {
+    email => _ =>
+      User.findByEmail(email).map {
+        user =>
+          Ok(toJson(
+            List("Di Huang", "Di Zhu", "Aaron Huang")
+          ))
+      }.getOrElse(Forbidden)
   }
 }

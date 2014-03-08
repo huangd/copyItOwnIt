@@ -1,55 +1,63 @@
+@(user: User)
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        CopyItOwnIt
-    </title>
-    <link rel='stylesheet' href="@routes.Assets.at("stylesheets/bootstrap-theme.css")" />
-    <link rel='stylesheet' href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
-    <link rel='stylesheet' href="@routes.Assets.at("stylesheets/copyItOwnIt.css")" />
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            CopyItOwnIt
+        </title>
+        <link rel='stylesheet' href="@routes.Assets.at("stylesheets/bootstrap-theme.css")" />
+        <link rel='stylesheet' href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+        <link rel='stylesheet' href="@routes.Assets.at("stylesheets/copyItOwnIt.css")" />
+    </head>
 
-<body role="document" style>
-<!-- Fixed navbar -->
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Copy It &amp; Own It</a>
+    <body role="document" style>
+            <!-- Fixed navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Copy It &amp; Own It</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                    <!--/.nav-collapse -->
+            </div>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+
+        <div id="addPost" class="container" role="form">
+            <form id="addPostForm" role="form" action="@routes.Application.authenticate" method="POST">
+                <textarea name="aPost" id="aPost" class="form-control" rows="3" form="addPostForm" required></textarea>
+                <button class="btn btn-block" id="addPostButton" type="submit">Add</button>
+            </form>
         </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
 
-<div id="posts" class="container theme-showcase flipbox-container" role="main">
-</div>
+        <div id="posts" class="container theme-showcase flipbox-container" role="main">
+        </div>
 
-<script src="@routes.Assets.at("javascripts/jquery-1.11.0.min.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/jquery.flippy.min.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/post.js")" type="text/javascript"></script>
-<script>
-    $(document).ready(function () {
-        $.getJSON("/user/posts", function (posts) {
-            addPosts(posts);
-        });
-    })
-</script>
-</body>
+        <script src="@routes.Assets.at("javascripts/jquery-1.11.0.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/jquery.flippy.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/post.js")" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                $.getJSON("/user/posts", function (posts) {
+                    addPosts(posts);
+                });
+            })
+        </script>
+    </body>
 </html>
