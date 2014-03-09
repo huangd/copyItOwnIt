@@ -2,9 +2,13 @@ package controllers
 
 import play.api.mvc.Controller
 import play.api.libs.json.Json._
+import play.api.data._
+import play.api.data.Forms._
+import anorm._
 
 import views.html
 import models._
+
 
 /**
  * User: huangd
@@ -30,8 +34,19 @@ object UserPost extends Controller with Secured {
       User.findByEmail(email).map {
         user =>
           Ok(toJson(
-            List("Di Huang", "Di Zhu", "Aaron Huang")
+            Post.getPosts(email)
           ))
       }.getOrElse(Forbidden)
+  }
+
+  def addPost = isAuthenticated {
+    email => implicit request =>
+      Form("aPost" -> nonEmptyText).bindFromRequest.fold(
+        errors => BadRequest,
+        content => {
+          Post.add(Post(NotAssigned, content), email)
+          Ok
+        }
+      )
   }
 }

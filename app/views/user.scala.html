@@ -39,7 +39,7 @@
         </div>
 
         <div id="addPost" class="container" role="form">
-            <form id="addPostForm" role="form" action="@routes.Application.authenticate" method="POST">
+            <form id="addPostForm" role="form" action="@routes.UserPost.addPost" method="POST">
                 <textarea name="aPost" id="aPost" class="form-control" rows="3" form="addPostForm" required></textarea>
                 <button class="btn btn-block" id="addPostButton" type="submit">Add</button>
             </form>
@@ -52,12 +52,6 @@
         <script src="@routes.Assets.at("javascripts/jquery.flippy.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/post.js")" type="text/javascript"></script>
-        <script>
-            $(document).ready(function () {
-                $.getJSON("/user/posts", function (posts) {
-                    addPosts(posts);
-                });
-            })
-        </script>
+        <script src="@routes.Assets.at("javascripts/user.js")" type="text/javascript"></script>
     </body>
 </html>
