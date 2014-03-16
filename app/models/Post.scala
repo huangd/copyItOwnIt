@@ -7,6 +7,7 @@ import play.api.Play.current
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.Date
 import java.text.SimpleDateFormat
+import play.api.libs.json._
 
 /**
  * User: huangd
@@ -17,6 +18,15 @@ import java.text.SimpleDateFormat
 case class Post(id: Pk[String], content: String)
 
 object Post {
+
+  implicit val writes = new Writes[Post] {
+    def writes(post: Post): JsValue = {
+      Json.obj(
+        "id" -> post.id.toString,
+        "content" -> post.content
+      )
+    }
+  }
 
   /**
    * Parse a Post from ResultSet
@@ -34,12 +44,12 @@ object Post {
    * @param email
    * @return
    */
-  def getPosts(email: String): List[String] = {
+  def getPosts(email: String): List[Post] = {
     DB.withTransaction {
       implicit connection =>
         SQL(
           """
-            select content
+            select POST.id, POST.content
             from POST, POST_USER
             where POST.id = POST_USER.post_id
             and POST_USER.user_email = {email}
@@ -48,7 +58,7 @@ object Post {
         ).on(
           'email -> email
         )().map(row =>
-          row[String]("content")
+          Post(row[Pk[String]]("id"), row[String]("content"))
         ).toList
     }
   }

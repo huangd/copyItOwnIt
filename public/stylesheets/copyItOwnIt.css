@@ -5,3 +5,7 @@ body {
 #addPost {
     padding-bottom: 20px;
 }
+
+.withMargin {
+    margin-bottom: 20px;
+}
