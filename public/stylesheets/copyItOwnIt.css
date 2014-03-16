@@ -9,3 +9,15 @@ body {
 .withMargin {
     margin-bottom: 20px;
 }
+
+.delete em {
+    background-color: #fdd;
+    border-color: #700;
+    color: #600
+}
+
+.insert em {
+    background-color: #efc;
+    border-color: #070;
+    color: #050
+}

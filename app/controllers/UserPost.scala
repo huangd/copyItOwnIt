@@ -8,6 +8,7 @@ import anorm._
 
 import views.html
 import models._
+import org.apache.commons.codec.digest.DigestUtils
 
 
 /**
@@ -45,7 +46,10 @@ object UserPost extends Controller with Secured {
         errors => BadRequest,
         content => {
           Post.add(Post(NotAssigned, content), email)
-          Ok
+          Ok(toJson( obj(
+            "id" -> DigestUtils.md5Hex(content),
+            "content" -> content)
+          ))
         }
       )
   }

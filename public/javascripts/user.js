@@ -11,7 +11,7 @@ $('#addPostForm').submit(
             url: "/user/post",
             data: $('#aPost').serialize(),
             success: function (data) {
-                addPost($('#aPost').val());
+                addPost(data);
             }
         });
         e.preventDefault();
