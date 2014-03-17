@@ -22,15 +22,23 @@ object Application extends Controller {
     })
   )
 
-  /**
-   * Logout and clean the session
-   * @return
-   */
+  val signupForm = Form(
+    tuple(
+      "name"  -> text,
+      "email" -> text,
+      "password" -> text
+    )
+  )
+
   def login = Action {
     implicit request =>
       Ok(html.login(loginForm));
   }
 
+  /**
+   * Logout and clean the session
+   * @return
+   */
   def logout = Action {
     Redirect(routes.Application.login).withNewSession.flashing(
       "success" -> "You've been logged out"
@@ -46,6 +54,22 @@ object Application extends Controller {
         formWithErrors => BadRequest(html.login(formWithErrors)),
         user => Redirect(routes.UserPost.user).withSession("email" -> user._1)
       )
+  }
+
+  def signupPage = Action {
+    implicit request =>
+      Ok(html.signup(signupForm));
+  }
+
+  /**
+   * Handle user registration
+   * @return
+   */
+  def signup = Action {
+    implicit request =>
+      val (name, email, password) = signupForm.bindFromRequest.get
+      User.addUser(name, email, password)
+      Ok(html.login(loginForm));
   }
 }
 

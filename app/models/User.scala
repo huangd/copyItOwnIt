@@ -61,4 +61,22 @@ object User {
         ).as(User.simple.singleOpt)
     }
   }
+
+  def addUser(name: String, email: String, password: String): Unit = {
+    DB.withConnection {
+      implicit connection =>
+        SQL(
+          """
+          insert into USER
+          (name, email, password)
+          values
+          ({name}, {email}, {password})
+          """
+        ).on(
+          'name -> name,
+          'email -> email,
+          'password -> password
+        ).executeUpdate()
+    }
+  }
 }
