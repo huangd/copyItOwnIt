@@ -35,7 +35,7 @@ object User {
   def findByEmail(email: String): Option[User] = {
     DB.withConnection {
       implicit connection =>
-        SQL("select * from user where email = {email}").on(
+        SQL("select * from USER where email = {email}").on(
           'email -> email
         ).as(User.simple.singleOpt)
     }
@@ -52,7 +52,7 @@ object User {
       implicit connection =>
         SQL(
           """
-          select * from user where
+          select * from USER where
           email = {email} and password = {password}
           """
         ).on(
