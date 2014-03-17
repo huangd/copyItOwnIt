@@ -36,7 +36,7 @@ function addPosts(posts) {
                 }
                 $('#' + textareaId).toggle();
                 $('#' + postId).toggle();
-
+                $('#' + textareaId).find("textarea").val('');
                 e.preventDefault();
             });
     });
@@ -79,7 +79,7 @@ function addPost(post) {
             }
             $('#' + textareaId).toggle();
             $('#' + postId).toggle();
-
+            $('#' + textareaId).find("textarea").val('');
             e.preventDefault();
         });
 }
