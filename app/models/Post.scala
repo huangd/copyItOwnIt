@@ -97,6 +97,35 @@ object Post {
   }
 
   /**
+   * delete a post
+   */
+  def delete(postId: String, email: String): Unit = {
+    DB.withTransaction {
+      implicit connection =>
+      // Delete from POST
+        SQL(
+          """
+            delete from POST
+            where id = {id}
+          """
+        ).on(
+          'id -> postId
+        ).executeUpdate()
+
+        // Delete from POST_USER
+        SQL(
+          """
+            delete from POST_USER
+            where post_id = {id} and user_email = {email}
+          """
+        ).on(
+          'id -> postId,
+          'email -> email
+        ).executeUpdate()
+    }
+  }
+
+  /**
    * Add entry to POST_USER table
    * @param postId post id
    * @param email user id which is user's email

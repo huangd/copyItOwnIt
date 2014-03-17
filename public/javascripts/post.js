@@ -3,9 +3,9 @@ function addPosts(posts) {
         var postId = post.id;
         var textareaId = postId + '_textarea';
         var buttonId = postId + '_button';
-        var ownItButton = '<button class="btn btn-block withMargin" data-toggle="modal" data-target="#myModal" id="' + buttonId + '">Own It</button>';
+        var ownItButton = '<button class="btn btn-block withMargin" id="' + buttonId + '">Own It</button>';
         var wellElement = '<div class="well" id="' + postId + '">' + post.content + '</div>';
-        var textarea = '<div  style="display: none" id="' + textareaId + '"><textarea class="form-control" rows="3"></textarea>' + ownItButton + '</div>';
+        var textarea = '<div  style="display: none" id="' + textareaId + '"><textarea class="form-control" rows="2"></textarea>' + ownItButton + '</div>';
         $(wellElement).
             appendTo('#posts').
             click(function (e) {
@@ -19,15 +19,21 @@ function addPosts(posts) {
 
         $('#' + buttonId).
             click(function (e) {
-                $('#compare').html(
-                    $(diffview({
-                        baseTextLines: $('#' + postId).text(),
-                        newTextLines: $('#' + textareaId).find("textarea").val(),
-                        inline: true
-                    })[0]).
-                        find(".data").html()
-                );
-
+                var textCopy = $('#' + postId).text();
+                var textType = $('#' + textareaId).find("textarea").val();
+                if (textCopy == textType) {
+                    ;
+                } else {
+                    $('#compare').html(
+                        $(diffview({
+                            baseTextLines: textCopy,
+                            newTextLines: textType,
+                            inline: true
+                        })[0]).
+                            find(".data").html()
+                    );
+                    $('#diffViewModal').modal();
+                }
                 $('#' + textareaId).toggle();
                 $('#' + postId).toggle();
 
@@ -40,11 +46,11 @@ function addPost(post) {
     var postId = post.id;
     var textareaId = postId + '_textarea';
     var buttonId = postId + '_button';
-    var ownItButton = '<button class="btn btn-block withMargin" data-toggle="modal" data-target="#myModal" id="' + buttonId + '">Own It</button>';
+    var ownItButton = '<button class="btn btn-block withMargin" id="' + buttonId + '">Own It</button>';
     var wellElement = '<div class="well" id="' + postId + '">' + post.content + '</div>';
-    var textarea = '<div  style="display: none" id="' + textareaId + '"><textarea class="form-control" rows="3"></textarea>' + ownItButton + '</div>';
+    var textarea = '<div  style="display: none" id="' + textareaId + '"><textarea class="form-control" rows="2"></textarea>' + ownItButton + '</div>';
     $(wellElement).
-        appendTo('#posts').
+        prependTo('#posts').
         click(function (e) {
             $('#' + postId).toggle();
             $('#' + textareaId).toggle();
@@ -52,19 +58,25 @@ function addPost(post) {
         });
 
     $('#posts').
-        append(textarea);
+        prepend(textarea);
 
     $('#' + buttonId).
         click(function (e) {
-            $('#compare').html(
-                $(diffview({
-                    baseTextLines: $('#' + postId).text(),
-                    newTextLines: $('#' + textareaId).find("textarea").val(),
-                    inline: true
-                })[0]).
-                    find(".data").html()
-            );
-
+            var textCopy = $('#' + postId).text();
+            var textType = $('#' + textareaId).find("textarea").val();
+            if (textCopy == textType) {
+                ;
+            } else {
+                $('#compare').html(
+                    $(diffview({
+                        baseTextLines: textCopy,
+                        newTextLines: textType,
+                        inline: true
+                    })[0]).
+                        find(".data").html()
+                );
+                $('#diffViewModal').modal();
+            }
             $('#' + textareaId).toggle();
             $('#' + postId).toggle();
 

@@ -46,11 +46,31 @@ object UserPost extends Controller with Secured {
         errors => BadRequest,
         content => {
           Post.add(Post(NotAssigned, content), email)
-          Ok(toJson( obj(
+          Ok(toJson(obj(
             "id" -> DigestUtils.md5Hex(content),
             "content" -> content)
           ))
         }
       )
+  }
+
+  /**
+   * delete a post
+   * @return
+   */
+  def deletePost = isAuthenticated {
+    email => implicit request =>
+      request.body.asJson.map {
+        json =>
+          (json \ "postId").asOpt[String].map {
+            postId =>
+              Post.delete(postId, email)
+              Ok(postId)
+          }.getOrElse {
+            BadRequest("Missing parameter [name]")
+          }
+      }.getOrElse {
+        BadRequest("Expecting Json data")
+      }
   }
 }
