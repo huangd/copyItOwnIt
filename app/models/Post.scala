@@ -53,7 +53,7 @@ object Post {
             from POST, POST_USER
             where POST.id = POST_USER.post_id
             and POST_USER.user_email = {email}
-            order by POST.create_date desc
+            order by POST.create_date
           """
         ).on(
           'email -> email
