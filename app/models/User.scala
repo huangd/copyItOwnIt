@@ -61,4 +61,5 @@ object User {
         ).as(User.simple.singleOpt)
     }
   }
+
 }
