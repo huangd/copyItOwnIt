@@ -14,6 +14,8 @@ $('#addPostForm').submit(
                 addPost(data);
             }
         });
+
+        $('#aPost').val('');
         e.preventDefault();
     }
 )
